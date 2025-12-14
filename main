@@ -1,0 +1,1019 @@
+SOFTWARE TESTING AND AUTOMATION LABORATORY
+Course Code
+L:T:P:S
+: 22ISL72
+: 0:0:1:0
+Credits
+CIE Marks
+: 1
+: 50
+Exam Hours : 3 SEE Marks : 50
+Course Outcomes: At the end of the Course, the Student will be able to:
+22ISL72.1 Derive the test cases for a given problem using testing approaches such as decision table
+approach, Equivalence class testing and Boundary Value Analysis method
+22ISL72.2 Derive test cases for UI of web applications.
+22ISL72.3 Illustrate automated testing of web applications using selenium automation framework
+22ISL72.4 Illustrate excel file updated using Selenium
+Mapping of Course Outcomes to Program Outcomes and Program Specific Outcomes :
+CO/PO PO1 PO2 PO3 PO4 PO5 PO6 PO7 PO8 PO9 PO10 PO11 PO12 PSO1 PSO2
+CO1 3 3 3 3 - - - - - - - 3 3 3
+CO2 3 3 3 3 3 - - - - - - 3 3 3
+CO3 3 3 3 3 3 - - - - - - 3 3 3
+CO4 3 3 3 3 3 - - - - - - 3 3 3
+Experiment
+No.
+Experiment
+PART-A
+1 Design and develop a program in a language of your choice to solve the triangle problem
+defined as follows: Accept three integers which are supposed to be the three sides of a triangle
+and determine if the three values represent an equilateral triangle, isosceles triangle, scalene
+triangle, or they do not form a triangle at all. Assume that the upper limit for the size of any
+side is 10. Derive test cases for your program based on decision table approach, execute the
+test cases and discuss the results
+2
+Design, develop, code and run the program in any suitable language to solve the commission
+problem. Analyze it from the perspective of boundary value testing, derive different test cases,
+execute these test cases and discuss the test results.
+3
+Design, develop, code and run the program in any suitable Language to implement the Next
+Date function. Analyze it from the perspective of equivalence class value testing, derive
+different test cases, execute these test cases and discuss the test results.
+4 Design front-end for any web application and derive the test cases as applicable. Validate the
+UI elements using JavaScript.
+5
+Write a program for matrix multiplication. “Introspect the causes for its failure and write down
+the possible reasons”. Analyze the Positive test cases and Negative Test cases.
+6 Write a JUnit unit test for evaluating calculator Java class.
+PART-B
+7 Write a Junit test case for checking the database connection.
+8 Illustrate automated testing using selenium to perform tests on login web pages.
+9 Write a program to perform cross-browser testing in Selenium and make use of TestNG to
+specify different browsers for your test execution.
+10 Develop and test a program to count the number of check boxes on the page checked
+and unchecked count.
+11. Write and test a program to provide a total number of different objects present on a web page
+using selenium.
+12 Use selenium to test a program that updates 10 student records into a table from an Excel file.
+Program 1: Design and develop a program in a language of your choice to solve the triangle problem
+defined as follows. Accept 3 integers which are supposed to be 3 sides of a triangle and determine if the
+3 values represent an equilateral triangle,isosceles,scalene or they do not form a triangle at all. Assume
+that the upper limit for the size of any side is 10. Derive test cases for your program based on the
+Decision Table approach, execute the test cases and discuss the test results.
+Solution:
+1. Accept three integers (sides of a triangle).
+2. Determine if they form:
+- Not a triangle (violates triangle property)
+- Equilateral triangle (all 3 sides equal)
+- Isosceles triangle (any 2 sides equal)
+- Scalene triangle (all sides different)
+3. Constraint: Each side ≤ 10.
+4. Use Decision Table Testing to derive test cases, execute them, and discuss results.
+import java.util.Scanner;
+public class TriangleType {
+ public static void main(String[] args) {
+ Scanner sc = new Scanner(System.in);
+ System.out.print("Enter side 1: ");
+ int a = sc.nextInt();
+ System.out.print("Enter side 2: ");
+ int b = sc.nextInt();
+ System.out.print("Enter side 3: ");
+ int c = sc.nextInt();
+ // Check upper limit condition
+ if (a > 10 || b > 10 || c > 10 || a <= 0 || b <= 0 || c <= 0) {
+ System.out.println("Invalid input! Each side must be between 1 and 10.");
+ return;
+ }
+ if (a + b > c && a + c > b && b + c > a) {
+ if (a == b && b == c) {
+ System.out.println("Equilateral Triangle");
+ } else if (a == b || b == c || a == c) {
+ System.out.println("Isosceles Triangle");
+ } else {
+ System.out.println("Scalene Triangle");
+ }
+ } else {
+ System.out.println("Not a Triangle");
+ }
+ sc.close();
+ }
+}
+Output
+Testcases
+Testcase 20 DescPon Inpul Output
+a 6 C
+DTI Enter a, 6, с 10 2 3 Not a triangle
+DT2 Enter a,6,с 2 8 3
+Not a tRangle
+DT3 Enter ab, с 2 3 6 Not a trPangle
+DT4 Enter a,b,с 5 5 5
+Equiateral Enangle ?
+DT5 Enter 9,60 ? Impossp6le 2
+076 Foter a,6,с ? ? Impostiole
+DT7 Enter a,6, c
+5 5 4
+Isosceles Aiangle
+DIB Rnter asb, c ? Impossede
+DT9 Enter a,b, с
+5 4 5
+Isosoler tSangle
+DTIO Ente a,b,C H
+5 5 Isaseles Fangle
+תם Knter ab, 2
+3 4 Scalenc Mangle
+Decision Talle
+Rules RI R2 R3 RA R5 R6 R7 R8 R9 RJO RIl
+dl:a<btc T T T T T T T T T T
+c2:6<a+c F T TTTTTTTT
+3: c<at6 FTT7TTтт T
+c4a-6 -TTTTFFFF
+c5:a-c -TTFF TTFF
+c0:6=c -TFTFT FTF
+al:Nat a tBargle
+92: Scalene
+93: Is0sceles
+a4: Kqullaterol
+as: Impossible
+X X
+X
+Program 2: Design, develop, code and run the program in any suitable language to solve the
+commission problem. Analyze it from the perspective of boundary value testing, derive different test
+cases, execute these test cases and discuss the test results.
+Solution:
+1. Accept sales amount (integer/float).
+2. Calculate commission based on rules (a typical commission structure is used in software testing
+examples):
+● If sales ≤ 1000 → 10% commission
+● If 1001 ≤ sales ≤ 1800 → 15% commission
+● If sales > 1800 → 20% commission
+3. Apply Boundary Value Testing (BVA) to derive test cases.
+4. Implement the program in Java.
+5. Execute and discuss results.
+import java.util.Scanner;
+public class SalesCommission {
+ public static void main(String[] args) {
+ final double LOCK_PRICE = 45.0;
+ final double STOCK_PRICE = 30.0;
+ final double BARREL_PRICE = 25.0;
+ int totalLocks = 0, totalStocks = 0, totalBarrels = 0;
+ Scanner sc = new Scanner(System.in);
+ System.out.println("Enter the number of locks (enter -1 to exit):");
+ int locks = sc.nextInt();
+ while (locks != -1) {
+ System.out.println("Enter the number of stocks and barrels:");
+ int stocks = sc.nextInt();
+ int barrels = sc.nextInt();
+ // Validation for locks
+ if (locks < 1 || locks > 70) {
+ System.out.println("Value of locks not in the range 1–70");
+ } else if (totalLocks + locks > 70) {
+ System.out.println("New total locks = " + (totalLocks + locks) + " not in the range 1–70");
+ } else {
+ totalLocks += locks;
+ }
+ // Validation for stocks
+ if (stocks < 1 || stocks > 80) {
+ System.out.println("Value of stocks not in the range 1–80");
+ } else if (totalStocks + stocks > 80) {
+ System.out.println("New total stocks = " + (totalStocks + stocks) + " not in the range 1–80");
+ } else {
+ totalStocks += stocks;
+ }
+ // Validation for barrels
+ if (barrels < 1 || barrels > 90) {
+ System.out.println("Value of barrels not in the range 1–90");
+ } else if (totalBarrels + barrels > 90) {
+ System.out.println("New total barrels = " + (totalBarrels + barrels) + " not in the range 1–90");
+ } else {
+ totalBarrels += barrels;
+ }
+ System.out.println("Total locks = " + totalLocks);
+ System.out.println("Total stocks = " + totalStocks);
+ System.out.println("Total barrels = " + totalBarrels);
+ System.out.println("\nEnter the number of locks (enter -1 to exit):");
+ locks = sc.nextInt();
+ }
+ // Final totals
+ System.out.println("\nFinal Totals:");
+ System.out.println("Locks = " + totalLocks);
+ System.out.println("Stocks = " + totalStocks);
+ System.out.println("Barrels = " + totalBarrels);
+ // Calculate sales
+ double lockSales = totalLocks * LOCK_PRICE;
+ double stockSales = totalStocks * STOCK_PRICE;
+ double barrelSales = totalBarrels * BARREL_PRICE;
+ double sales = lockSales + stockSales + barrelSales;
+ System.out.println("Total sales = " + sales);
+
+ // Calculate commission
+ double commission;
+ if (sales > 1800) {
+ commission = (0.10 * 1000) + (0.15 * 800) + (0.20 * (sales - 1800));
+ } else if (sales > 1000) {
+ commission = (0.10 * 1000) + (0.15 * (sales - 1000));
+ } else {
+ commission = 0.10 * sales;
+ }
+ System.out.println("Commission = " + commission);
+ sc.close();
+ }
+}
+Output
+Testcase 0 Desclpilion Input Outpuet
+Locks Stocks Barmels Sales Comm
+BVAI Enter l,s,6 40 45 2370 334
+BVA 2 Enter 1s,6 2 40
+54
+2415 343
+BVA 3 Entul,s,6 35 40 45 3900 640
+BVA 4 Enter 1,5,6 69 40 45 5430 946
+BVA 5 Enter l,s,6 70 40 45 5475 955
+BVA 6 Knta(,5,6 35 45 2730 406
+BVAY Entee (,5,6 35 2 45 2760 412 BVA8 Enter L,s, 6 35 19 45 5070 874 BVAA Enter 4,5,6 35 80 45 5100 880 BrA1O Enter,5,6 35 40 2800 420 BVAL Ent 1,5,6 35 40 २ 2805 425
+BVAI2 Anter 1,8,6 35 40 89 5000 860 BVA13 Enels,6 35 40 % 5025 865
+Considering output variabte saler we have 3 dots for calulating commisston, ie, of sales are below 1000, comm & 10%, f sates B foom 1081-1800, then
+comon is 15%. and sf sales ane greater than 1801, comm 820%..
+Sales Mir locks, stockks
+barrels
+Mint Locks,
+stocks, barel
+Nom locks,
+stods,bamels
+Mot-locks,
+stocksbamls
+Mox locks,
+toks, bamels
+2,1,1
+1-1000 1211 1,2,1 5,5,5
+1,132
+9,10,10
+10,9,10
+10,10,9
+10,10,1o
+11,10,10 12,10,10
+1001-1800 10,11,10 10,12,10 14,4,14
+10,10,11 10,10,12
+17,18,18
+18,17,18
+18,18,17
+18,18,18
+19,18,18 20, 18,18 69,80,90
+180-abоe 18,19, 1s 18,20,18 48,48,49 70,79,90 10,80,90
+18,18,19 18,18,20 70,00 89
+Problem 3: Design, develop, code, and run the program in any suitable Language to implement the Next
+Date function. Analyse it from the perspective of equivalence class value testing, derive different test
+cases, execute these test cases, and discuss the test results.
+Solution:
+Input - (Day, Month, Year)
+Output - (Day, Month, Year) of the next calendar date
+Must handle - Leap years, Month boundaries, Year change (Dec 31 → Jan 1 of next year), Invalid inputs
+Input
+- Year: 2000–2100 (Valid), outside this range (Invalid)
+- Month: 1–12 (Valid), otherwise (Invalid)
+- Day: Depends on month & leap year
+import java.util.Scanner;
+public class NextDate {
+ // Check if a year is leap year
+ private static boolean isLeap(int year) {
+ return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+ }
+ // Get number of days in a given month of a year
+ private static int getDaysInMonth(int month, int year) {
+ switch (month) {
+ case 4: case 6: case 9: case 11:
+ return 30;
+ case 2:
+ return isLeap(year) ? 29 : 28;
+ default:
+ return 31;
+ }
+ }
+ // Validate input date
+ private static boolean isValidDate(int day, int month, int year) {
+ if (year < 2000 || year > 2100) {
+ System.out.println("Year not in range 2000–2100");
+ return false;
+ }
+ if (month < 1 || month > 12) {
+ System.out.println("Month not in range 1–12");
+ return false;
+ }
+ int maxDays = getDaysInMonth(month, year);
+ if (day < 1 || day > maxDays) {
+ System.out.println("Day not in range 1–" + maxDays);
+ return false;
+ }
+ return true;
+ }
+ // Compute next date
+ private static int[] getNextDate(int day, int month, int year) {
+ int maxDays = getDaysInMonth(month, year);
+
+ if (day < maxDays) {
+ day++;
+ } else {
+ day = 1;
+ if (month == 12) {
+ month = 1;
+ year++;
+ } else {
+ month++;
+ }
+ }
+ return new int[]{day, month, year};
+ }
+ public static void main(String[] args) {
+ Scanner sc = new Scanner(System.in);
+ int day, month, year;
+ while (true) {
+ System.out.println("Enter today's date (dd mm yyyy):");
+ day = sc.nextInt();
+ month = sc.nextInt();
+ year = sc.nextInt();
+ if (isValidDate(day, month, year)) {
+ break; // exit loop only when input is valid
+ }
+ System.out.println("Invalid date. Try again.\n");
+ }
+ // Calculate tomorrow’s date
+ int[] tomorrow = getNextDate(day, month, year);
+ // If year crosses 2100 boundary
+ if (tomorrow[2] > 2100) {
+ System.out.println("The next day is out of boundary value of year");
+ } else {
+ System.out.printf("Next day is: %d %d %d\n", tomorrow[0], tomorrow[1], tomorrow[2]);
+ }
+ sc.close();
+ }
+}
+Identify Equivalence Classes (ECs)
+1. Day (D)
+Valid:
+EC-D1: 1 ≤ D ≤ 28 (common to all months).
+EC-D2: 29 (valid in months with ≥29 days).
+EC-D3: 30 (valid in months with ≥30 days).
+EC-D4: 31 (valid in months with 31 days).
+Invalid:
+EC-D5: D < 1.
+EC-D6: D > 31.
+2. Month (M)
+Valid:
+EC-M1: 1–12.
+Invalid:
+EC-M2: M < 1.
+EC-M3: M > 12.
+3. Year (Y)
+Valid:
+EC-Y1: 2000–2100.
+Invalid:
+EC-Y2: Y < 2000.
+EC-Y3: Y > 2100.
+Weak Normal Equivalence Class Testing
+(Choose one valid value from each valid EC, no combinations of invalids.)
+Strong Normal Equivalence Class Testing
+(Choose all combinations of valid ECs — at least 1 per class.)
+Weak Robust Equivalence Class Testing
+(Choose one invalid value from each invalid EC, keep the others valid.)
+Strong Robust Equivalence Class Testing
+(Choose combinations of invalid ECs, multiple invalids at once.)
+Problem 4: Design a front-end for any web application and derive the test cases as applicable. Validate
+the UI elements using JavaScript.
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Login Form Validation</title>
+ <link rel="stylesheet" href="style.css">
+ <script src="login.js" defer></script>
+</head>
+<body>
+ <div class="container">
+ <div class="main">
+ <h2>Login Form</h2>
+ <form id="loginForm">
+ <label for="username">User Name:</label>
+ <input type="text" id="username" required>
+ <label for="password">Password:</label>
+ <input type="password" id="password" required>
+ <button type="submit" id="submit">Login</button>
+ </form>
+ <p class="note">
+ <strong>Note:</strong> For demo, use <br>
+ <b>Username:</b> Form <br>
+ <b>Password:</b> 123
+ </p>
+ </div>
+ </div>
+</body>
+</html>
+style.css
+body {
+ font-family: Arial, sans-serif;
+ background: #f4f4f9;
+ margin: 0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+}
+.container {
+ background: #fff;
+ padding: 25px 30px;
+ border-radius: 12px;
+ box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.main h2 {
+ text-align: center;
+ margin-bottom: 20px;
+}
+label {
+ display: block;
+ margin: 10px 0 5px;
+ font-weight: bold;
+}
+input {
+ width: 100%;
+ padding: 8px;
+ margin-bottom: 12px;
+ border: 1px solid #ccc;
+ border-radius: 6px;
+}
+button {
+ width: 100%;
+ padding: 10px;
+ background: #007bff;
+ color: white;
+ font-size: 16px;
+ border: none;
+ border-radius: 6px;
+ cursor: pointer;
+}
+button:hover {
+ background: #0056b3;
+}
+.note {
+ margin-top: 15px;
+ font-size: 14px;
+ color: #555;
+}
+login.js
+let attempts = 3; // Maximum login attempts allowed
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+ e.preventDefault(); // Prevent form from submitting by default
+ const username = document.getElementById("username").value.trim();
+ const password = document.getElementById("password").value.trim();
+ if (username === "Form" && password === "123") {
+ alert("Login successful!");
+ window.location.href = "success.html";
+ } else {
+ attempts--;
+ alert(`Invalid login. You have ${attempts} attempt(s) left.`);
+ if (attempts === 0) {
+ document.getElementById("username").disabled = true;
+ document.getElementById("password").disabled = true;
+ document.getElementById("submit").disabled = true;
+ alert("No attempts left. Login disabled.");
+ }
+ }
+});
+success.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Login Success</title>
+</head>
+<body>
+ <h2> Successful Login!</h2>
+</body>
+</html>
+Login Form
+User Name:
+Password:
+Login
+Note: For demo, use
+Username: Form
+Password: 123
+This page says
+Invalid login. You have 2 attempt(s) left.
+Login Form
+User Name:
+Form
+Password:
+Login
+Note: For demo, use
+Username: Form
+Password: 123
+OK
+This page says
+Login successful!
+Login Form
+User Name:
+Form
+Password:
+Login
+Note: For demo, use
+Username: Form
+Password: 123
+OK
+H
+Test case table
+Problem 5: Write a program for matrix multiplication. “Introspect the causes for its failure and write
+down the possible reasons”. Analyze the Positive test cases and Negative Test cases.
+import java.util.Scanner;
+public class MatrixMultiplication {
+ public static void main(String[] args) {
+ Scanner sc = new Scanner(System.in);
+ // Input dimensions
+ System.out.print("Enter number of rows in M1: ");
+ int m = sc.nextInt();
+ System.out.print("Enter number of columns in M1: ");
+ int n = sc.nextInt();
+ System.out.print("Enter number of rows in M2: ");
+ int o = sc.nextInt();
+ System.out.print("Enter number of columns in M2: ");
+ int p = sc.nextInt();
+ // Check multiplication condition
+ if (n != o) {
+ System.out.println("Matrix Multiplication is not possible (M1 columns ≠ M2 rows).");
+ return;
+ }
+ // Input Matrix A
+ int[][] A = new int[m][n];
+ System.out.println("Enter elements of Matrix A:");
+ for (int i = 0; i < m; i++) {
+ for (int j = 0; j < n; j++) {
+ System.out.print("A[" + i + "][" + j + "] : ");
+ A[i][j] = sc.nextInt();
+ }
+ }
+ // Input Matrix B
+ int[][] B = new int[o][p];
+ System.out.println("Enter elements of Matrix B:");
+ for (int i = 0; i < o; i++) {
+ for (int j = 0; j < p; j++) {
+ System.out.print("B[" + i + "][" + j + "] : ");
+ B[i][j] = sc.nextInt();
+ }
+ }
+ // Result matrix m × p
+ int[][] result = new int[m][p];
+ // Multiplication logic
+ for (int i = 0; i < m; i++) {
+ for (int j = 0; j < p; j++) {
+ for (int k = 0; k < n; k++) {
+ result[i][j] += A[i][k] * B[k][j];
+ }
+ }
+ }
+ // Print Result
+ System.out.println("Resultant Matrix:");
+ for (int i = 0; i < m; i++) {
+ for (int j = 0; j < p; j++) {
+ System.out.print(result[i][j] + " ");
+ }
+ System.out.println();
+ }
+ sc.close();
+ }
+}
+Problem 6: Write a JUnit unit test for evaluating calculator Java class.
+Requirements
+● Java JDK (version 8+ recommended)
+● JUnit 5 library (or JUnit 4, but I showed JUnit 5)
+● An IDE (Eclipse, IntelliJ IDEA, or NetBeans)
+public class Calculator {
+ public int add(int a, int b) {
+ return a + b;
+ }
+ public int subtract(int a, int b) {
+ return a - b;
+ }
+ public int multiply(int a, int b) {
+ return a * b;
+ }
+ public int divide(int a, int b) {
+ if (b == 0) {
+ throw new ArithmeticException("Division by zero not allowed");
+ }
+ return a / b;
+ }
+}
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+public class CalculatorTest {
+ private Calculator calc;
+ @BeforeEach
+ void setUp() {
+ calc = new Calculator();
+ }
+ @Test
+ void testAddition() {
+ assertEquals(5, calc.add(2, 3), "2 + 3 should equal 5");
+ assertEquals(0, calc.add(-2, 2), "-2 + 2 should equal 0");
+ }
+ @Test
+ void testSubtraction() {
+ assertEquals(1, calc.subtract(3, 2), "3 - 2 should equal 1");
+ assertEquals(-5, calc.subtract(-2, 3), "-2 - 3 should equal -5");
+ }
+ @Test
+ void testMultiplication() {
+ assertEquals(6, calc.multiply(2, 3), "2 * 3 should equal 6");
+ assertEquals(0, calc.multiply(0, 10), "0 * 10 should equal 0");
+ }
+ @Test
+ void testDivision() {
+ assertEquals(2, calc.divide(6, 3), "6 / 3 should equal 2");
+ }
+ @Test
+ void testDivisionByZero() {
+ Exception exception = assertThrows(ArithmeticException.class, () -> {
+ calc.divide(5, 0);
+ });
+ assertEquals("Division by zero not allowed", exception.getMessage());
+ }
+}
+Output
+┌─ JUnit Jupiter ✔
+│ └─ CalculatorTest ✔
+│ ├─ testAddition() ✔
+│ ├─ testSubtraction() ✔
+│ ├─ testMultiplication() ✔
+│ ├─ testDivision() ✔
+│ └─ testDivisionByZero() ✔
+└─ JUnit Vintage ✔
+Test run finished after 120 ms
+[ 5 tests found ]
+[ 5 tests started ]
+[ 5 tests successful ]
+[ 0 tests failed ]
+Problem 7: Write a Junit test case for checking the database connection.
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import static org.junit.jupiter.api.Assertions.*;
+class DatabaseConnectionTest {
+ private static Connection connection;
+ @BeforeAll
+ static void setup() throws Exception {
+ // Load driver (optional in modern JDBC if driver is on classpath)
+ Class.forName("com.mysql.cj.jdbc.Driver");
+ // Database URL, username, and password
+ String url = "jdbc:mysql://localhost:3306/testdb"; // replace with your DB name
+ String user = "root"; // replace with your DB user
+ String password = "root"; // replace with your DB password
+ connection = DriverManager.getConnection(url, user, password);
+ }
+ @Test
+ void testConnectionIsNotNull() {
+ assertNotNull(connection, "Database connection should not be null");
+ }
+ @Test
+ void testConnectionIsValid() throws Exception {
+ assertTrue(connection.isValid(5), "Database connection should be valid");
+ }
+ @Test
+ void testSimpleQuery() throws Exception {
+ Statement stmt = connection.createStatement();
+ ResultSet rs = stmt.executeQuery("SELECT 1"); // Simple query
+ assertTrue(rs.next(), "Query should return at least one row");
+ assertEquals(1, rs.getInt(1), "Result should be 1");
+ rs.close();
+ stmt.close();
+ }
+ @AfterAll
+ static void teardown() throws Exception {
+ if (connection != null && !connection.isClosed()) {
+ connection.close();
+ }
+ }
+}
+Output
+[INFO] Running DatabaseConnectionTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+Problem 8: Illustrate automated testing using Selenium to perform tests on login web pages.
+External files to be added:
+1. JAR file obtained from selenium-java-4.1.0 folder and sub-folder lib.
+2. Chromedriver.exe file in a folder named driver The above JAR files have to be added under the
+Classpath section in Build Path Configuration function.
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+public class GuruWebpageLogin {
+ public static void main(String[] args) {
+ // Set path to chromedriver.exe (update path if needed)
+ System.setProperty("webdriver.chrome.driver",
+"C:\\folder_name\\SeleniumJars\\driver\\chromedriver.exe");
+ // Initialize ChromeDriver
+ WebDriver driver = new ChromeDriver();
+ driver.manage().window().maximize();
+ try {
+ System.out.println("Launching Chrome Browser...");
+ // Open Guru99 demo page
+ driver.get("http://demo.guru99.com/test/newtours/");
+ WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+ // Enter username
+ WebElement username =
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("userName")));
+ username.sendKeys("userName");
+ // Enter password
+ WebElement password = driver.findElement(By.name("password"));
+ password.sendKeys("password");
+ // Click submit button
+ WebElement submitButton = driver.findElement(By.name("submit"));
+ submitButton.click();
+ // Validate page title
+ String expectedTitle = "Login: Mercury Tours";
+ String actualTitle = driver.getTitle();
+ System.out.println("Page Title: " + actualTitle);
+ if (expectedTitle.equals(actualTitle)) {
+ System.out.println("LOGIN SUCCESSFUL...");
+ System.out.println("All test cases passed ");
+ } else {
+ System.out.println("LOGIN FAILED ");
+ }
+ } catch (Exception e) {
+ e.printStackTrace();
+ } finally {
+ // Close the browser
+ driver.quit();
+ }
+ }
+}
+Output
+Problem 9: Write a program to perform cross-browser testing in Selenium and make use of TestNG to
+specify different browsers for your
+test execution.
+Project Setup:
+- Create a Maven project in your IDE.
+- Add Selenium WebDriver and TestNG dependencies to your pom.xml file.
+- Base Test Class
+- Right-click on testng.xml and select "Run As" -> "TestNG Suite". This will execute MyTest on
+both Chrome and Firefox
+BaseTest.java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+public class BaseTest {
+ protected WebDriver driver;
+ @BeforeMethod
+ @Parameters("browser")
+ public void setup(String browser) {
+ if (browser.equalsIgnoreCase("chrome")) {
+ driver = new ChromeDriver();
+ } else if (browser.equalsIgnoreCase("firefox")) {
+ driver = new FirefoxDriver();
+ } else if (browser.equalsIgnoreCase("edge")) {
+ driver = new EdgeDriver();
+ } else {
+ throw new IllegalArgumentException("Unsupported browser: " + browser);
+ }
+ driver.manage().window().maximize();
+ }
+ @AfterMethod
+ public void tearDown() {
+ if (driver != null) {
+ driver.quit();
+ }
+ }
+}
+MyTest.java
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+public class MyTest extends BaseTest {
+ @Test
+ public void testGoogleSearch() {
+ driver.get("https://www.google.com");
+ driver.findElement(By.name("q")).sendKeys("Selenium TestNG");
+ driver.findElement(By.name("btnK")).click(); // Click the Google Search button
+ // Add assertions here to verify the search results
+ }
+}
+testng.xml
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CrossBrowserSuite" parallel="tests" thread-count="2">
+ <test name="ChromeTest">
+ <parameter name="browser" value="chrome"/>
+ <classes>
+ <class name="MyTest"/>
+ </classes>
+ </test>
+ <test name="FirefoxTest">
+ <parameter name="browser" value="firefox"/>
+ <classes>
+ <class name="MyTest"/>
+ </classes>
+ </test>
+ <!-- Add more tests for other browsers like Edge if needed -->
+ <!--
+ <test name="EdgeTest">
+ <parameter name="browser" value="edge"/>
+ <classes>
+ <class name="MyTest"/>
+ </classes>
+ </test>
+ -->
+</suite>
+Output
+[TestNG] Running:
+ /path/to/your/project/testng.xml
+[INFO] Starting Chrome Test Suite...
+[INFO] Launching Chrome browser...
+[INFO] Executing test on Chrome: Verifying page title.
+[INFO] Test completed for Chrome.
+[INFO] Starting Firefox Test Suite...
+[INFO] Launching Firefox browser...
+[INFO] Executing test on Firefox: Verifying page title.
+[INFO] Test completed for Firefox.
+===============================================
+Suite
+Total tests run: 2, Failures: 0, Skips: 0
+===============================================
+Problem 10: Develop and test a program to count the number of check boxes on the page, including
+checked and unchecked counts.
+package testscripts;
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
+import org.openqa.selenium.server.RemoteControlConfiguration;
+import org.openqa.selenium.server.SeleniumServer;
+import org.testng.annotations.*;
+public class exp8 {
+ private Selenium selenium;
+ private SeleniumServer seleniumServer;
+ @BeforeClass
+ public void setUp() throws Exception {
+ RemoteControlConfiguration rc = new RemoteControlConfiguration();
+ rc.setPort(4444);
+ seleniumServer = new SeleniumServer(rc);
+ seleniumServer.start();
+ selenium = new DefaultSelenium("localhost", 4444, "*firefox", "http://");
+ selenium.start();
+ }
+ @Test
+ public void testCheckBoxesCount() throws Exception {
+ selenium.open("http://browsershots.org/");
+ selenium.windowMaximize();
+ // Count total checkboxes
+ int total = selenium.getXpathCount("//input[@type='checkbox']").intValue();
+ System.out.println("Total Checkboxes: " + total);
+ // Count checked checkboxes
+ int checked = selenium.getXpathCount("//input[@type='checkbox' and @checked]").intValue();
+ System.out.println("Checked Checkboxes: " + checked);
+ // Count unchecked checkboxes
+ int unchecked = selenium.getXpathCount("//input[@type='checkbox' and
+not(@checked)]").intValue();
+ System.out.println("Unchecked Checkboxes: " + unchecked);
+ }
+ @AfterClass
+ public void tearDown() throws Exception {
+ if (selenium != null) selenium.stop();
+ if (seleniumServer != null) seleniumServer.stop();
+ }
+}
+Output
+Total Checkboxes: 65
+Checked Checkboxes: 2
+Unchecked Checkboxes: 63
+Problem 11: Write and test a program to provide a total number of different objects present on a web
+page using Selenium.
+External files to be added:
+a) JAR file obtained from selenium-java-4.1.0 folder and sub-folder lib.
+b) Chromedriver.exe file in a folder named driver The above JAR files have to be added under the
+Classpath section in Build Path Configuration function.
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.List;
+public class CountWebPageObjects {
+ public static void main(String[] args) {
+ // Set ChromeDriver path (update as per your system)
+ System.setProperty("webdriver.chrome.driver", "C:\\Users\\driver\\chromedriver.exe");
+ WebDriver driver = new ChromeDriver();
+ try {
+ driver.manage().window().maximize();
+ System.out.println("Launching Chrome...");
+ // Open target page (example: Gmail login page)
+ driver.get("https://mail.google.com/");
+ // Count links
+ List<WebElement> links = driver.findElements(By.tagName("a"));
+ // Count input fields (textboxes, password fields, etc.)
+ List<WebElement> inputs = driver.findElements(By.tagName("input"));
+ // Count buttons
+ List<WebElement> buttons = driver.findElements(By.tagName("button"));
+ // Count images
+ List<WebElement> images = driver.findElements(By.tagName("img"));
+ // Count dropdowns
+ List<WebElement> dropdowns = driver.findElements(By.tagName("select"));
+ // Print counts
+ System.out.println("Number of Links: " + links.size());
+ System.out.println("Number of Input fields: " + inputs.size());
+ System.out.println("Number of Buttons: " + buttons.size());
+ System.out.println("Number of Images: " + images.size());
+ System.out.println("Number of Dropdowns: " + dropdowns.size());
+ // Total objects
+ int totalObjects = links.size() + inputs.size() + buttons.size() + images.size() + dropdowns.size();
+ System.out.println("Total Number of Objects on the Page: " + totalObjects);
+ } finally {
+ driver.quit();
+ }
+ }
+}
+Output
+Launching Chrome...
+Number of Links: 10
+Number of Input fields: 2
+Number of Buttons: 1
+Number of Images: 3
+Number of Dropdowns: 1
+Total Number of Objects on the Page: 17
+Problem 12: Use Selenium to test a program that updates 10 student records into a table from an Excel
+file.
+Prerequisite :
+1) jxl jar file ,Downloaded from https://sourceforge.net/projects/jexc...
+2) An excel file with student records present in it. (In my case "Students.xls").
+3) Install TestNG Plugin for eclipse ide from the given Link below.
+https://www.techbeamers.com/install-t...
+Steps :
+1) Open eclipse create a new java project - add a class - then add the jar file using Build path
+2) Import all the packages.
+3) Write the relevant code
+4) Run the program and see the output on the specified location - Run the program as TestNG suite
+Ensure the following JARs are in your project Build Path → Add External JARs:
+1. jxl.jar (for Excel reading)
+2. selenium-server-standalone-x.x.x.jar (or selenium-java-x.x.x.jar)
+3. log4j-1.2.14.jar (logging, optional but useful)
+4. testng-7.4.0.jar (TestNG framework)
+5. jcommander-1.78.jar (dependency for TestNG)
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+public class ExcelTest {
+ private static final String INPUT_FILE = "C:\\Users\\ST AND AUTO LAB\\excel\\Students.xls";
+ private static final String OUTPUT_FILE = "C:\\Users\\ST AND AUTO LAB\\excel\\Result.xls";
+ @BeforeClass
+ public void setUp() {
+ System.out.println("Setting up before running Excel test...");
+ }
+ @Test
+ public void testImportExport() throws Exception {
+ // Open the input Excel file
+ FileInputStream fi = new FileInputStream(INPUT_FILE);
+ Workbook workbook = Workbook.getWorkbook(fi);
+ Sheet sheet = workbook.getSheet(0);
+ // Prepare output Excel file
+ FileOutputStream fo = new FileOutputStream(OUTPUT_FILE);
+ WritableWorkbook writableWorkbook = Workbook.createWorkbook(fo);
+ WritableSheet writableSheet = writableWorkbook.createSheet("ResultSheet", 0);
+ // Copy data from input to output
+ for (int i = 0; i < sheet.getRows(); i++) {
+ for (int j = 0; j < sheet.getColumns(); j++) {
+ String cellValue = sheet.getCell(j, i).getContents();
+ Label label = new Label(j, i, cellValue);
+ writableSheet.addCell(label);
+ }
+ }
+ // Add Result column header
+ Label header = new Label(sheet.getColumns(), 0, "Result");
+ writableSheet.addCell(header);
+ // Process student marks and update result
+ for (int i = 1; i < sheet.getRows(); i++) {
+ // Assuming marks are in the 3rd column (index 2)
+ String markStr = sheet.getCell(2, i).getContents();
+ int marks = Integer.parseInt(markStr);
+ String result = (marks > 35) ? "Pass" : "Fail";
+ Label resultLabel = new Label(sheet.getColumns(), i, result);
+ writableSheet.addCell(resultLabel);
+ }
+ // Save the output file
+ writableWorkbook.write();
+ writableWorkbook.close();
+ workbook.close();
+ fi.close();
+ fo.close();
+ System.out.println(" Records successfully updated in " + OUTPUT_FILE);
+ }
+}
+Output
