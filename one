@@ -1,0 +1,326 @@
+WebDriver driver = new ChromeDriver();
+driver.manage().window().maximize();
+try {
+System.out.println("Launching Chrome Browser...");
+// Open Guru99 demo page
+driver.get("http://demo.guru99.com/test/newtours/");
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+// Enter username
+WebElement username =
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("userName")));
+username.sendKeys("userName");
+// Enter password
+WebElement password = driver.findElement(By.name("password"));
+password.sendKeys("password");
+// Click submit button
+WebElement submitButton = driver.findElement(By.name("submit"));
+submitButton.click();
+// Validate page title
+String expectedTitle = "Login: Mercury Tours";
+String actualTitle = driver.getTitle();
+System.out.println("Page Title: " + actualTitle);
+if (expectedTitle.equals(actualTitle)) {
+System.out.println("LOGIN SUCCESSFUL...");
+System.out.println("All test cases passed ");
+} else {
+System.out.println("LOGIN FAILED ");
+}
+} catch (Exception e) {
+e.printStackTrace();
+} finally {
+// Close the browser
+driver.quit();
+}
+}
+}
+Output
+Problem 9: Write a program to perform cross-browser testing in Selenium and make use of TestNG to
+specify different browsers for your
+test execution.
+Project Setup:
+- Create a Maven project in your IDE.
+- Add Selenium WebDriver and TestNG dependencies to your pom.xml file.
+- Base Test Class
+- Right-click on testng.xml and select "Run As" -> "TestNG Suite". This will execute MyTest on
+both Chrome and Firefox
+BaseTest.java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+public class BaseTest {
+protected WebDriver driver;
+@BeforeMethod
+@Parameters("browser")
+public void setup(String browser) {
+if (browser.equalsIgnoreCase("chrome")) {
+driver = new ChromeDriver();
+} else if (browser.equalsIgnoreCase("firefox")) {
+driver = new FirefoxDriver();
+} else if (browser.equalsIgnoreCase("edge")) {
+driver = new EdgeDriver();
+} else {
+throw new IllegalArgumentException("Unsupported browser: " + browser);
+}
+driver.manage().window().maximize();
+}
+@AfterMethod
+public void tearDown() {
+if (driver != null) {
+driver.quit();
+}
+}
+}
+MyTest.java
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+public class MyTest extends BaseTest {
+@Test
+public void testGoogleSearch() {
+driver.get("https://www.google.com");
+driver.findElement(By.name("q")).sendKeys("Selenium TestNG");
+driver.findElement(By.name("btnK")).click(); // Click the Google Search button
+// Add assertions here to verify the search results
+}
+}
+testng.xml
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CrossBrowserSuite" parallel="tests" thread-count="2">
+<test name="ChromeTest">
+<parameter name="browser" value="chrome"/>
+<classes>
+<class name="MyTest"/>
+</classes>
+</test>
+<test name="FirefoxTest">
+<parameter name="browser" value="firefox"/>
+<classes>
+<class name="MyTest"/>
+</classes>
+</test>
+<!-- Add more tests for other browsers like Edge if needed -->
+<!--
+<test name="EdgeTest">
+<parameter name="browser" value="edge"/>
+<classes>
+<class name="MyTest"/>
+</classes>
+</test>
+-->
+</suite>
+Output
+[TestNG] Running:
+/path/to/your/project/testng.xml
+[INFO] Starting Chrome Test Suite...
+[INFO] Launching Chrome browser...
+[INFO] Executing test on Chrome: Verifying page title.
+[INFO] Test completed for Chrome.
+[INFO] Starting Firefox Test Suite...
+[INFO] Launching Firefox browser...
+[INFO] Executing test on Firefox: Verifying page title.
+[INFO] Test completed for Firefox.
+===============================================
+Suite
+Total tests run: 2, Failures: 0, Skips: 0
+===============================================
+Problem 10: Develop and test a program to count the number of check boxes on the page, including
+checked and unchecked counts.
+package testscripts;
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
+import org.openqa.selenium.server.RemoteControlConfiguration;
+import org.openqa.selenium.server.SeleniumServer;
+import org.testng.annotations.*;
+public class exp8 {
+private Selenium selenium;
+private SeleniumServer seleniumServer;
+@BeforeClass
+public void setUp() throws Exception {
+RemoteControlConfiguration rc = new RemoteControlConfiguration();
+rc.setPort(4444);
+seleniumServer = new SeleniumServer(rc);
+seleniumServer.start();
+selenium = new DefaultSelenium("localhost", 4444, "*firefox", "http://");
+selenium.start();
+}
+@Test
+public void testCheckBoxesCount() throws Exception {
+selenium.open("http://browsershots.org/");
+selenium.windowMaximize();
+// Count total checkboxes
+int total = selenium.getXpathCount("//input[@type='checkbox']").intValue();
+System.out.println("Total Checkboxes: " + total);
+// Count checked checkboxes
+int checked = selenium.getXpathCount("//input[@type='checkbox' and @checked]").intValue();
+System.out.println("Checked Checkboxes: " + checked);
+// Count unchecked checkboxes
+int unchecked = selenium.getXpathCount("//input[@type='checkbox' and
+not(@checked)]").intValue();
+System.out.println("Unchecked Checkboxes: " + unchecked);
+}
+@AfterClass
+public void tearDown() throws Exception {
+if (selenium != null) selenium.stop();
+if (seleniumServer != null) seleniumServer.stop();
+}
+}
+Output
+Total Checkboxes: 65
+Checked Checkboxes: 2
+Unchecked Checkboxes: 63
+Problem 11: Write and test a program to provide a total number of different objects present on a web
+page using Selenium.
+External files to be added:
+a) JAR file obtained from selenium-java-4.1.0 folder and sub-folder lib.
+b) Chromedriver.exe file in a folder named driver The above JAR files have to be added under the
+Classpath section in Build Path Configuration function.
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.List;
+public class CountWebPageObjects {
+public static void main(String[] args) {
+// Set ChromeDriver path (update as per your system)
+System.setProperty("webdriver.chrome.driver", "C:\\Users\\driver\\chromedriver.exe");
+WebDriver driver = new ChromeDriver();
+try {
+driver.manage().window().maximize();
+System.out.println("Launching Chrome...");
+// Open target page (example: Gmail login page)
+driver.get("https://mail.google.com/");
+// Count links
+List<WebElement> links = driver.findElements(By.tagName("a"));
+// Count input fields (textboxes, password fields, etc.)
+List<WebElement> inputs = driver.findElements(By.tagName("input"));
+// Count buttons
+List<WebElement> buttons = driver.findElements(By.tagName("button"));
+// Count images
+List<WebElement> images = driver.findElements(By.tagName("img"));
+// Count dropdowns
+List<WebElement> dropdowns = driver.findElements(By.tagName("select"));
+// Print counts
+System.out.println("Number of Links: " + links.size());
+System.out.println("Number of Input fields: " + inputs.size());
+System.out.println("Number of Buttons: " + buttons.size());
+System.out.println("Number of Images: " + images.size());
+System.out.println("Number of Dropdowns: " + dropdowns.size());
+// Total objects
+int totalObjects = links.size() + inputs.size() + buttons.size() + images.size() + dropdowns.size();
+System.out.println("Total Number of Objects on the Page: " + totalObjects);
+} finally {
+driver.quit();
+}
+}
+}
+Output
+Launching Chrome...
+Number of Links: 10
+Number of Input fields: 2
+Number of Buttons: 1
+Number of Images: 3
+Number of Dropdowns: 1
+Total Number of Objects on the Page: 17
+Problem 12: Use Selenium to test a program that updates 10 student records into a table from an Excel
+file.
+Prerequisite :
+1) jxl jar file ,Downloaded from https://sourceforge.net/projects/jexc...
+2) An excel file with student records present in it. (In my case "Students.xls").
+3) Install TestNG Plugin for eclipse ide from the given Link below.
+https://www.techbeamers.com/install-t...
+Steps :
+1) Open eclipse create a new java project - add a class - then add the jar file using Build path
+2) Import all the packages.
+3) Write the relevant code
+4) Run the program and see the output on the specified location - Run the program as TestNG suite
+Ensure the following JARs are in your project Build Path → Add External JARs:
+1. jxl.jar (for Excel reading)
+2. selenium-server-standalone-x.x.x.jar (or selenium-java-x.x.x.jar)
+3. log4j-1.2.14.jar (logging, optional but useful)
+4. testng-7.4.0.jar (TestNG framework)
+5. jcommander-1.78.jar (dependency for TestNG)
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+public class ExcelTest {
+private static final String INPUT_FILE = "C:\\Users\\ST AND AUTO LAB\\excel\\Students.xls";
+private static final String OUTPUT_FILE = "C:\\Users\\ST AND AUTO LAB\\excel\\Result.xls";
+@BeforeClass
+public void setUp() {
+System.out.println("Setting up before running Excel test...");
+}
+@Test
+public void testImportExport() throws Exception {
+// Open the input Excel file
+FileInputStream fi = new FileInputStream(INPUT_FILE);
+Workbook workbook = Workbook.getWorkbook(fi);
+Sheet sheet = workbook.getSheet(0);
+// Prepare output Excel file
+FileOutputStream fo = new FileOutputStream(OUTPUT_FILE);
+WritableWorkbook writableWorkbook = Workbook.createWorkbook(fo);
+WritableSheet writableSheet = writableWorkbook.createSheet("ResultSheet", 0);
+// Copy data from input to output
+for (int i = 0; i < sheet.getRows(); i++) {
+for (int j = 0; j < sheet.getColumns(); j++) {
+String cellValue = sheet.getCell(j, i).getContents();
+Label label = new Label(j, i, cellValue);
+writableSheet.addCell(label);
+}
+}
+// Add Result column header
+Label header = new Label(sheet.getColumns(), 0, "Result");
+writableSheet.addCell(header);
+// Process student marks and update result
+for (int i = 1; i < sheet.getRows(); i++) {
+// Assuming marks are in the 3rd column (index 2)
+String markStr = sheet.getCell(2, i).getContents();
+int marks = Integer.parseInt(markStr);
+String result = (marks > 35) ? "Pass" : "Fail";
+Label resultLabel = new Label(sheet.getColumns(), i, result);
+writableSheet.addCell(resultLabel);
+}
+// Save the output file
+writableWorkbook.write();
+writableWorkbook.close();
+workbook.close();
+fi.close();
+fo.close();
+System.out.println(" Records successfully updated in " + OUTPUT_FILE);
+}
+}
+Output
+
+
+
+
+33 / 33
+
+
+109%
+
+
+
+
+
+Details
+
+File properties
+Owner
+shruthi G R
+Uploader
+shruthi G R
+Created
+10 Sept 2025, 06:39
+Modified
+10 Sept 2025, 06:39
+Size
+4.9 MB
